@@ -286,3 +286,22 @@ elda:VelocityFormatter a rdfs:Class
 elda:jsonUsesISOdate a rdf:Property
 	; rdfs:comment " Property of a JSONFormatter that says if xsd:date and xsd:dateTime values should be encoded based on ISO 8601. Default value is false. "
 	.
+
+elda:customMetadata a rdf:Property
+    ; rdfs:comment """
+        Property used to supply metadata blocks in a configuration.
+        
+        anAPI elda:customMetadata
+            [ rdfs:label "nameOfBlock"
+            , elda:statements [p v ; :p' v']
+            ]
+        """
+    .
+    
+elda:customStatement a rdf:Property
+    ; rdfs:comment 
+    """
+        Specifies a statement in a metadata block.
+    """
+    .
+    

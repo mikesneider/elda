@@ -19,8 +19,8 @@
 
 # Prefix for example-local entities.
 @prefix egc:      <https://rawgit.com/epimorphics/elda/gh-pages/demo/vocabularies/games.ttl#>.
-@prefix hello:    <https://rawgit.com/epimorphics/elda/gh-pages/demo/vocabularies/games.ttl#games> .
-@prefix again:    <https://rawgit.com/epimorphics/elda/gh-pages/demo/vocabularies/games.ttl#again> .
+@prefix hello:    <https://rawgit.com/epimorphics/elda/gh-pages/demo/vocabularies/games.ttl#games-> .
+@prefix again:    <https://rawgit.com/epimorphics/elda/gh-pages/demo/vocabularies/games.ttl#again-> .
 
 
 # ---------------------------------------------------------------------
@@ -89,6 +89,14 @@ hello:hello-world-again a api:API
         
     ; elda:enableCounting true
    	; elda:cacheExpiryTime "10m"
+	
+	; elda:customMetadata
+        [ rdfs:label "meta"
+        ; elda:customStatement
+            [ rdf:predicate <eh:/magicNumber>
+            ; rdf:object 17
+            ]
+        ]	
 	.
 	
 <http://localhost:3030/ds/query> 

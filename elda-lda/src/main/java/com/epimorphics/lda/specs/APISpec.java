@@ -14,7 +14,9 @@ package com.epimorphics.lda.specs;
 import static com.epimorphics.util.RDFUtils.getStringValue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,8 @@ import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.sparql.vocabulary.FOAF;
 import com.hp.hpl.jena.util.FileManager;
 import com.hp.hpl.jena.util.iterator.Map1;
+import com.hp.hpl.jena.vocabulary.RDF;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
  * Encapsulates a specification of a single API instance.
@@ -90,6 +94,8 @@ public class APISpec extends SpecCommon {
 	protected final String graphTemplate;
 
 	protected final boolean purging;
+	
+	public /* for the moment */ final Map<String, Model> customMetadata = new HashMap<String, Model>();
     
 	public APISpec( FileManager fm, Resource specification, ModelLoader loader ) {
 		this( "", fm, specification, loader );
@@ -128,8 +134,40 @@ public class APISpec extends SpecCommon {
 		setDefaultSuffixName(bindings, root);      
 		extractEndpointSpecifications( root );
         extractModelPrefixEditor( root );
+        extractCustomMetadata(root);
     }
     
+    private void extractCustomMetadata(Resource root) {
+    	for (Statement s: root.listProperties(ELDA_API.customMetadata).toList()) {
+    		RDFNode c = s.getObject();
+    		if (c.isResource()) extractSingleCustomMetadata(root, c.asResource()); 
+   			else throw new EldaException("operand of custom metadata should be resoure: " + c);
+    	}
+	}
+
+	private void extractSingleCustomMetadata(Resource root, Resource meta) {
+		Model m = ModelFactory.createDefaultModel();
+		String name = getStringValue(meta, RDFS.label);
+		if (name == null) 
+			throw new EldaException("custom metadata for " + root + " should have rdfs:label name.");
+	//
+		if (customMetadata.containsKey(name))
+			throw new EldaException("custom metadata named " + name + " is multiply defined.");
+	//
+		for (Statement s: meta.listProperties(ELDA_API.customStatement).toList()) {
+			RDFNode ob = s.getObject();
+			if (ob.isResource()) {
+				Resource R = ob.asResource();
+				Property p = R.getProperty(RDF.predicate).getPredicate();
+				RDFNode o = R.getProperty(RDF.object).getObject();
+				m.add(root, p, o);
+			} else {
+				throw new EldaException("object of customStatement must be named resource: " + s);
+			}
+		}
+		customMetadata.put(name,  m);
+	}
+
 	public static void setDefaultSuffixName(Bindings b, Resource ep) {
 		if (ep.hasProperty( API.defaultFormatter)) {
 			Resource r = ep.getProperty( API.defaultFormatter ).getObject().asResource();
