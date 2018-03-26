@@ -36,7 +36,6 @@ implements Renderer
     /***********************************/
 
     public static final String DEFAULT_FORMAT = "html";
-    public static final String DEFAULT_METADATA_OPTIONS = "bindings,formats,versions,execution";
 
     /** The default page template which will define the overall presentation unless
      *  a template is named in the Elda configuration */
@@ -124,16 +123,6 @@ implements Renderer
     /** @return The shortname service instance */
     public ShortnameService shortNameService() {
         return shortNameService;
-    }
-
-    /**
-     * Return the configured metadata options, or, if not specified in the API
-     * configuration, the default options.
-     *
-     * @return The metadata options for this renderer
-     */
-    public MetadataOptions metadataOptions() {
-        return new MetadataOptions( configRoot(), DEFAULT_METADATA_OPTIONS );
     }
 
     /**

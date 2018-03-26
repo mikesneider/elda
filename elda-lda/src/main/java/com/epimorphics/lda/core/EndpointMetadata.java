@@ -77,6 +77,9 @@ public class EndpointMetadata {
 		, Set<Resource> licences
 		) {
 	//		
+//		Model xx = ModelFactory.createDefaultModel();
+//		thisMetaPage = xx.createResource(thisMetaPage.getURI());
+		
 		boolean listEndpoint = details.isListEndpoint();
 		Model metaModel = mergedModels.getMetaModel();
 		thisMetaPage.addProperty( API.definition, uriForDefinition );

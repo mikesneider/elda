@@ -45,6 +45,8 @@ extends HashSet<String>
         if (!root.hasProperty( ELDA_API.metadataOptions ) && defaultOptions != null) {
             addOptions( defaultOptions );
         }
+        
+        System.err.println(">> MetadataOptions: init to " + this);
     }
 
     /**
