@@ -77,6 +77,9 @@ public class EndpointMetadata {
 		, Set<Resource> licences
 		) {
 	//		
+		
+		System.err.println(">> -------------------------------------- addAllMetadata");
+		
 		boolean listEndpoint = details.isListEndpoint();
 		Model metaModel = mergedModels.getMetaModel();
 		thisMetaPage.addProperty( API.definition, uriForDefinition );
@@ -169,15 +172,18 @@ public class EndpointMetadata {
 		Map<String, Model> custom = spec.getAPISpec().customMetadata;
 		for (String name: custom.keySet()) {
 			System.err.println(">> custom block " + name);
-			custom.get(name).write(System.out, "TTL");
+			Model meta = custom.get(name);
+			meta.write(System.out, "TTL");
 			if (wantsMeta.wantsMetadata(name)) {
 				System.err.println(">> yes, wanted");
-				metaModel1.add(custom.get(name));
+				metaModel1.add(meta);
 			} else {
 				System.err.println(">> no, not wanted.");
-				setsMeta.setMetadata(name, custom.get(name));
+				setsMeta.setMetadata(name, meta);
 			}
 		}
+		System.err.println(">> and the execution");
+		
 	//
 	    if (wantsMeta.wantsMetadata( "versions" )) metaModel1.add( versionsModel ); else setsMeta.setMetadata( "versions", versionsModel );
 	    if (wantsMeta.wantsMetadata( "formats" )) metaModel1.add( formatsModel );  else setsMeta.setMetadata( "formats", formatsModel );
