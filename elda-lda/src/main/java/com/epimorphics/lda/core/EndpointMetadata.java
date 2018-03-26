@@ -79,6 +79,9 @@ public class EndpointMetadata {
 	//		
 		
 		System.err.println(">> -------------------------------------- addAllMetadata");
+		Resource wasMetaPage = thisMetaPage;
+		Model xx = ModelFactory.createDefaultModel();
+		thisMetaPage = wasMetaPage ; // x.createResource(thisMetaPage.getURI());
 		
 		boolean listEndpoint = details.isListEndpoint();
 		Model metaModel = mergedModels.getMetaModel();
@@ -87,7 +90,7 @@ public class EndpointMetadata {
 	    URI emv_uri = URIUtils.replaceQueryParam( URIUtils.newURI(thisMetaPage.getURI()), "_metadata", "all" );
 	    thisMetaPage.addProperty( API.extendedMetadataVersion, metaModel.createResource( emv_uri.toString() ) );
 	//
-	    thisMetaPage.addProperty( RDF.type, API.Page );
+	    wasMetaPage.addProperty( RDF.type, API.Page );
 	//
 	    for (Resource licence: licences) {
 	    	Resource l = licence.inModel(thisMetaPage.getModel());
@@ -114,7 +117,8 @@ public class EndpointMetadata {
 	    	if (totalResults != null)     		
 	    		thisMetaPage.addLiteral( OpenSearch.totalResults, totalResults.intValue() );
 	    	
-	    	thisMetaPage.addProperty( API.items, content );
+	    	wasMetaPage.addProperty( API.items, content );
+	    	
 	    	Resource firstPage = URIUtils.adjustPageParameter( metaModel, fullURI, listEndpoint, 0 );
 	    	Resource nextPage = URIUtils.adjustPageParameter( metaModel, fullURI, listEndpoint, page + 1 );
 	    	Resource prevPage = URIUtils.adjustPageParameter( metaModel, fullURI, listEndpoint, page - 1 );

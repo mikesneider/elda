@@ -104,8 +104,9 @@ public class APIEndpointImpl implements APIEndpoint {
 	    nb.expiresAt = query.viewSensitiveExpiryTime(spec.getAPISpec(), view);
 		nb.totalResults = query.requestTotalCount(nb.expiresAt, r.c, cache, dataSource, b, spec.getAPISpec().getPrefixMap());	    
 				
+		System.err.println(">> suppressing cache.");
     	TimedThing<ResponseResult> fromCache = cache.fetch(key);
-        if (fromCache == null || r.c.allowCache == false) {
+        if (true || fromCache == null || r.c.allowCache == false) {
         	// must construct and cache a new response-result
 //        	System.err.println(">>  Fresh.");
         	ResponseResult fresh = freshResponse(b, query, view, r, nb);
