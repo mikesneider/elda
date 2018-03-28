@@ -1120,6 +1120,10 @@ public class APIQuery implements VarSupply, WantsMetadata {
 	}
 
 	@Override public boolean wantsMetadata(String name) {
+		
+		System.err.println("<< want: " + name);
+		System.err.println(">> medatata optons: " + metadataOptions);
+		
 		return metadataOptions.contains(name) || metadataOptions.contains("all");
 	}
 

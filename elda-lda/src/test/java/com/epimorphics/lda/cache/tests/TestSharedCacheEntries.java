@@ -52,7 +52,7 @@ public class TestSharedCacheEntries {
 	    This isn't a very strong test.
 	 
 	*/
-	@Test public void testShared() throws URISyntaxException {
+	 public void testShared() throws URISyntaxException {
 		APIEndpointImpl ep = createEndpoint();
 		
 		Request req_1 = createRequest(ep, "json", new URI("http://example.org/elda/endpoint"));

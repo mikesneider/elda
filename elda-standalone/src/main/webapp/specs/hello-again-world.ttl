@@ -91,12 +91,10 @@ hello:hello-world-again a api:API
    	; elda:cacheExpiryTime "10m"
 	
 	; elda:customMetadata
-        [ rdfs:label "meta"
-        ; elda:customStatement
-            [ rdf:predicate <eh:/magicNumber>
-            ; rdf:object 17
-            ]
-        ]	
+        [ api:name "meta" ; <eh:/P1> 17
+        ; <eh:/P2> "mt" ; <eh:/P3> []
+        ]
+    , [api:name "mota" ; <eh:/Q> "Q"]	
 	.
 	
 <http://localhost:3030/ds/query> 

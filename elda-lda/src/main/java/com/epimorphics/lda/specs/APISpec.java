@@ -147,24 +147,20 @@ public class APISpec extends SpecCommon {
 
 	private void extractSingleCustomMetadata(Resource root, Resource meta) {
 		Model m = ModelFactory.createDefaultModel();
-		String name = getStringValue(meta, RDFS.label);
+		String name = getStringValue(meta, API.name);
+
 		if (name == null) 
-			throw new EldaException("custom metadata for " + root + " should have rdfs:label name.");
-	//
+			throw new EldaException("custom metadata for " + root + " should have api:name name.");
+		//
+		
 		if (customMetadata.containsKey(name))
 			throw new EldaException("custom metadata named " + name + " is multiply defined.");
-	//
-		for (Statement s: meta.listProperties(ELDA_API.customStatement).toList()) {
-			RDFNode ob = s.getObject();
-			if (ob.isResource()) {
-				Resource R = ob.asResource();
-				Property p = R.getProperty(RDF.predicate).getPredicate();
-				RDFNode o = R.getProperty(RDF.object).getObject();
-				m.add(root, p, o);
-			} else {
-				throw new EldaException("object of customStatement must be named resource: " + s);
-			}
+		//
+		
+		for (Statement s: meta.listProperties().toList()) {
+			m.add(s);	
 		}
+		
 		customMetadata.put(name,  m);
 	}
 
