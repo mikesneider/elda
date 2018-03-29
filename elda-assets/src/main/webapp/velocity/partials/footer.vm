@@ -23,3 +23,19 @@
     </div>
   </div>
 </footer>
+
+<H1>PERNICIOUS ABLATION</H1>
+
+$page.startIndex()
+
+AAAA
+
+$page.getResource("http://www.epimorphics.com/vocabularies/lda#notice")
+
+BBBB
+
+$page.getResource("http://www.w3.org/1999/xhtml/vocab#first")
+
+CCCC
+
+<div>DONE</div>

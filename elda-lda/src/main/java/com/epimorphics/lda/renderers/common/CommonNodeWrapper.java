@@ -114,6 +114,9 @@ extends RDFNodeWrapper
      * property, return null
      */
     public Resource getResource( Object p ) {
+    	
+    	System.err.println(">> getResource " + p);
+    	
         Resource r = null;
 
         if (isResource()) {
