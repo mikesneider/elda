@@ -26,6 +26,6 @@
 
 <h1>HOBO CANTELOPE</h1>
 
-$page.startIndex()
+START: $page.startIndex()
 
-DONE
+<div>DONE</div>
